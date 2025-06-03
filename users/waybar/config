@@ -1,0 +1,204 @@
+{
+    "layer": "top", // Waybar at top layer
+    "position": "bottom", // Waybar position (top|bottom|left|right)
+    // "height": 35, // Auto-height is used when commented
+    // "width": 1280, // Full screen width when commented
+    "spacing": 0, // Gaps between modules (in px)
+    // See `man waybar` for more configuration options
+
+// Configuration - modules-left
+
+    "modules-left": [
+        "custom/launcher",
+        "niri/workspaces",
+        "niri/window"
+    ],
+
+    "custom/launcher": {
+        "format":"{icon}",
+        "format-icons":" ",
+        "on-click": "fuzzel",
+        "tooltip": false
+    },
+
+    "niri/workspaces": {
+        "disable-scroll": true,
+        "all-outputs": false,
+        "current-only": true,
+        "format": "{icon}",
+        "format-icons": {
+            "3": "3",
+            "4": "4",
+            "5": "5",
+            "6": "6",
+            "7": "7",
+            "8": "8",
+            "9": "9",
+            "10": "10"
+        }
+    },
+
+    "niri/window": {
+        "format": "{app_id}",
+        // "all-outputs": true, // Active window shows only on active display when commented
+        "icon": false,
+        "max-length": 120
+    },
+
+// Configuration - modules-center
+    
+    "modules-center": [],
+       
+// Configuration - modules-right
+
+    "modules-right": [
+        "tray",
+	"network",
+        "group/hardware",
+        "clock#time",
+	"group/power"
+    ],
+
+    "tray": {
+        "icon-size": 16,
+        "spacing":5
+     },
+
+    "network": {
+        "format-disabled": " ",
+        "format-wifi": " ",
+        "tooltip-format-wifi": "{essid}: {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣",
+        "format-ethernet": "󰈀 {bandwidthDownBits:>} 󰶡 {bandwidthUpBits:>} 󰶣",
+        "tooltip-format-ethernet": "{ifname}: {ipaddr}/{cidr}",
+        "format-disconnected": " ",
+        "tooltip-format-disabled": false,
+        "tooltip-format-disconnected": false,
+        "on-click": "alacritty -e nmtui",
+        "interval": 2
+    },
+
+    "group/hardware": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "drawer-child",
+            "click-to-reveal": false,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "battery",
+            "cpu",
+            "memory",
+            "backlight",
+            "pulseaudio"
+        ]
+    },
+
+    "cpu": {
+        "interval": 5,
+        "format": "{usage:>3} {icon}",
+        "format-icons": "",
+        "states": {
+            "warning": 70,
+            "critical": 90,
+        },
+        "on-click": "alacritty -e htop"
+    },
+    
+    "memory": {
+        "interval": 5,
+        "format": "{:>3} {icon}",
+        "format-icons": "",
+        "on-click": "alacritty -e htop", 
+        "states": {
+            "warning": 70,
+            "critical": 90
+        }
+    },
+
+    "backlight": {
+        "format": "{percent} {icon}",
+        "format-icons":"",
+        "tooltip-format": "Backlight (Scroll): {percent:}%",
+        "on-scroll-down": "brightnessctl -c backlight set 5%-",
+        "on-scroll-up": "brightnessctl -c backlight set +5%"
+    },
+
+    "pulseaudio": {
+        "scroll-step": 2,
+        "format": "{volume} {icon}",
+        "format-muted":"muted 󰝟",
+        "format-icons":"󰕾",
+        "on-click": "pwvucontrol"
+    },
+
+    "battery": {
+        "interval": 10,
+        "states": {
+            "warning": 30,
+            "critical": 15
+        },
+        "format": "{capacity} {icon}",
+        "format-icons": "" 
+    },
+
+    "clock#time": {
+        "format": "{:%I:%M %p}",
+        "tooltip-format": "   {:%A %m/%d}\n\n<tt><small>{calendar}</small></tt>",
+        //"calendar": {
+        //    "on-scroll": 1,
+        //    "format": {
+        //        "months":     "<span color='#ffead3'><b>{}</b></span>",
+        //        "days":       "<span color='#ecc6d9'><b>{}</b></span>",
+        //        "weeks":      "<span color='#99ffdd'><b>W{}</b></span>",
+        //        "weekdays":   "<span color='#ffcc66'><b>{}</b></span>",
+        //        "today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+        //    },
+        //},
+        //"actions": {
+        //    "on-scroll-up": "shift_up",
+        //    "on-scroll-down": "shift_down"
+        //},
+	"on-click": "alacritty -e calcurse"
+    },
+
+    "group/power": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 500,
+            "children-class": "drawer-child",
+            "click-to-reveal": false,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/power",
+            "custom/lock",
+            "custom/suspend",
+            "custom/reboot"
+        ],
+    },
+
+    "custom/power": {
+        "format":" ⏻ ",
+        "on-click": "$HOME/.config/waybar/scripts/power.sh",
+        "tooltip": false
+    },
+
+    "custom/lock": {
+        "format":" 󰌾 ",
+        "on-click": "swaylock",
+        "tooltip": false
+    },
+
+    "custom/suspend": {
+        "format":" 󰤄 ",
+        "on-click": "$HOME/.config/waybar/scripts/suspend.sh",
+        "tooltip": false
+    },
+
+    "custom/reboot": {
+        "format":"  ",
+        "on-click": "$HOME/.config/waybar/scripts/reboot.sh",
+        "tooltip": false
+    },
+}

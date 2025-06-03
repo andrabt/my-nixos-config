@@ -1,0 +1,222 @@
+/* =============================================================================
+ *
+ * Waybar configuration
+ *
+ * Configuration reference: https://github.com/Alexays/Waybar/wiki/Configuration
+ *
+ * =========================================================================== */
+
+/* -----------------------------------------------------------------------------
+ * Keyframes
+ * -------------------------------------------------------------------------- */
+
+@keyframes blink-warning {
+    70% {
+        color: white;
+    }
+
+    to {
+        color: white;
+        background-color: orange;
+    }
+}
+
+@keyframes blink-critical {
+    70% {
+      color: white;
+    }
+
+    to {
+        color: white;
+        background-color: red;
+    }
+}
+
+/* -----------------------------------------------------------------------------
+ * Base styles
+ * -------------------------------------------------------------------------- */
+
+/* Reset all styles */
+* {
+    border: none;
+    border-radius: 0px;
+    min-height: 0;
+    margin: 0px;
+    padding: 0;
+    font-family: Fira-code, Jetbrains-mono;
+    font-size: 13px;
+}
+
+/* The whole bar */
+window#waybar {
+    background: #201e1e;
+    color: #f4f4f4;
+   /* background-color: #201e1e;*/
+   /* border-radius: 0px;*/
+}
+
+/* Every modules */
+#mode,
+#tray,
+#hardware-group,
+#network,
+#cpu,
+#memory,
+#backlight,
+#pulseaudio,
+#battery,
+#clock {
+    padding:0.5rem 0.6rem;
+    margin: 1px 0px;
+}
+
+/* -----------------------------------------------------------------------------
+ * Module styles
+ * -------------------------------------------------------------------------- */
+
+#custom-launcher {
+    margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    padding-left: 5px;
+    padding-right: 1px;
+    padding-top: 0.5px;
+    padding-bottom: 0.5px;
+    border-radius: 15px;
+    transition: none;
+    color: #201e1e;
+    background: #f4f4f4;
+    font-size: 20px;
+}
+
+#workspaces {
+    font-size: 13px;
+}
+
+#workspaces button {
+    border-radius: 0px;
+    color: #f4f4f4;
+    padding: 2px 6px;
+    margin-right: 2px;
+    margin-left: 2px;
+}
+
+#workspaces button.focused {
+    color: #f4f4f4;
+}
+
+#mode {
+    background-color: #201e1e;
+    box-shadow: inset 0 -3px #ffffff;
+}
+
+#window {
+    font-weight: bold;
+    margin-left: 5px;
+}
+
+#custom-hardware {
+    font-size: 10px;
+    color: #f4f4f4;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#network {
+    color: #f4f4f4;
+}
+
+#network.disconnected {
+    color: #eb0028;
+    border-bottom: 2px solid #eb0028;
+}
+
+#cpu {
+    color: #f4f4f4;
+}
+#cpu.warning {
+    color: orange;
+}
+
+#cpu.critical {
+    color: red;
+}
+
+#memory {
+    color: #f4f4f4;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#memory.warning {
+    color: orange;
+ }
+
+#memory.critical {
+    color: red;
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#backlight {
+    color: #f4f4f4;
+}
+
+#pulseaudio {
+    color: #f4f4f4;
+}
+
+#pulseaudio.muted {
+    color: #eb0028;
+    border-bottom: 2px solid #eb0028;
+}
+
+#battery {
+    color: #30ba78;
+    border-bottom: 2px solid #30ba78;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+#battery.discharging {
+    color: #f4f4f4;
+    border-bottom: 0px;
+}
+
+#battery.warning.discharging {
+    color: orange;
+    animation-name: blink-warning;
+    animation-duration: 3s;
+}
+
+#battery.critical.discharging {
+    color: red;
+    animation-name: blink-critical;
+    animation-duration: 2s;
+}
+
+#clock {
+}
+
+#custom-power {
+    margin-right:6px;
+    font-size:14px;
+}
+
+#custom-power:hover {
+    color: #dd0429;
+}
+
+#custom-lock:hover {
+    color: #dd0429;
+}
+
+#custom-suspend:hover {
+    color: #dd0429;
+}
+
+#custom-reboot:hover {
+    color: #dd0429;
+}
