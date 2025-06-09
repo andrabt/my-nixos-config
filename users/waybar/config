@@ -16,7 +16,7 @@
 
     "custom/launcher": {
         "format":"{icon}",
-        "format-icons":" ",
+        "format-icons":"",
         "on-click": "fuzzel",
         "tooltip": false
     },
@@ -97,7 +97,7 @@
     "cpu": {
         "interval": 5,
         "format": "{usage:>3} {icon}",
-        "format-icons": "",
+        "format-icons": "",
         "states": {
             "warning": 70,
             "critical": 90,
@@ -108,7 +108,7 @@
     "memory": {
         "interval": 5,
         "format": "{:>3} {icon}",
-        "format-icons": "",
+        "format-icons": "",
         "on-click": "alacritty -e htop", 
         "states": {
             "warning": 70,
@@ -118,7 +118,7 @@
 
     "backlight": {
         "format": "{percent} {icon}",
-        "format-icons":"",
+        "format-icons":"󰃡",
         "tooltip-format": "Backlight (Scroll): {percent:}%",
         "on-scroll-down": "brightnessctl -c backlight set 5%-",
         "on-scroll-up": "brightnessctl -c backlight set +5%"
@@ -128,9 +128,9 @@
         "scroll-step": 2,
         "format": "{volume} {icon}",
         "format-muted":"muted 󰝟",
-        "format-icons":"󰕾",
+        "format-icons":"",
         "on-click": "pwvucontrol"
-    },
+    }, 
 
     "battery": {
         "interval": 10,
@@ -139,7 +139,7 @@
             "critical": 15
         },
         "format": "{capacity} {icon}",
-        "format-icons": "" 
+        "format-icons": "󰢞" 
     },
 
     "clock#time": {
