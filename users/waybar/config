@@ -1,7 +1,7 @@
 {
     "layer": "top", // Waybar at top layer
     "position": "bottom", // Waybar position (top|bottom|left|right)
-    // "height": 35, // Auto-height is used when commented
+    "height": 34, // Auto-height is used when commented
     // "width": 1280, // Full screen width when commented
     "spacing": 0, // Gaps between modules (in px)
     // See `man waybar` for more configuration options
@@ -39,7 +39,7 @@
     },
 
     "niri/window": {
-        "format": "{app_id}",
+        "format": "{app_id} - {title}",
         // "all-outputs": true, // Active window shows only on active display when commented
         "icon": false,
         "max-length": 120
@@ -118,7 +118,7 @@
 
     "backlight": {
         "format": "{percent} {icon}",
-        "format-icons":"󰃡",
+        "format-icons":"󰛨",
         "tooltip-format": "Backlight (Scroll): {percent:}%",
         "on-scroll-down": "brightnessctl -c backlight set 5%-",
         "on-scroll-up": "brightnessctl -c backlight set +5%"
@@ -127,8 +127,8 @@
     "pulseaudio": {
         "scroll-step": 2,
         "format": "{volume} {icon}",
-        "format-muted":"muted 󰝟",
-        "format-icons":"",
+        "format-muted":"󰝛",
+        "format-icons":"󰝚",
         "on-click": "pwvucontrol"
     }, 
 
@@ -139,7 +139,7 @@
             "critical": 15
         },
         "format": "{capacity} {icon}",
-        "format-icons": "󰢞" 
+        "format-icons": "󱐋" 
     },
 
     "clock#time": {

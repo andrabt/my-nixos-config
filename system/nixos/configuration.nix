@@ -6,7 +6,6 @@
       ./hardware-configuration.nix
       ./src/boot.nix
       ./src/niri.nix
-      ./src/plasma.nix
       ./src/tlp.nix
     ];
 
@@ -15,9 +14,18 @@
 # Hardware & Filesystems Settings
   # Enable Compression on BTRFS
   fileSystems = {
-    "/".options = [ "compress=zstd" ];
-    "/home".options = [ "compress=zstd" ]; 
-    "/nix".options = [ "compress=zstd" "noatime" ];
+    "/" = {
+      device = "/dev/disk/by-label/NixOS";
+      options = [ "compress=zstd" ];
+    };
+    "/home" = { 
+      device = "/dev/disk/by-label/NixOS";
+      options = [ "compress=zstd" ];
+    }; 
+    "/nix" = {
+      device = "/dev/disk/by-label/NixOS";
+      options = [ "compress=zstd" "noatime" ];
+    };
   }; 
   
   # Enable Auto Scrubbing on BTRFS
@@ -31,7 +39,6 @@
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
-    extraPackages = with pkgs; [ rocmPackages.clr.icd ];
   };
   
   # Enable Sound
@@ -77,22 +84,15 @@
   # Disable TPM
   systemd.tpm2.enable = false;
 
-  # Enable Localsend
-  programs.localsend = {
-    enable = true;
-    openFirewall = true;
-  };
-
 # Environment Settings
   environment.systemPackages = with pkgs; [
     home-manager
     vim
-    git
-    git-crypt
-    gnupg
     wget
     curl
     gparted
+    exfatprogs
+    gvfs
     distrobox
   ];
 
@@ -118,7 +118,8 @@
 
   services.flatpak.enable = true;
   services.printing.enable = true;
-  
+  services.gvfs.enable = true;
+
 # Users Settings
   users.users.andrabt = {
     isNormalUser = true;

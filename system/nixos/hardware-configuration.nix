@@ -14,25 +14,25 @@
   boot.extraModulePackages = [ ];
 
   fileSystems."/" =
-    { device = "/dev/disk/by-uuid/6c3b4212-780c-40ee-acbc-4cfbc616077b";
+    { device = "/dev/disk/by-label/NixOS";
       fsType = "btrfs";
       options = [ "subvol=root" ];
     };
 
   fileSystems."/home" =
-    { device = "/dev/disk/by-uuid/6c3b4212-780c-40ee-acbc-4cfbc616077b";
+    { device = "/dev/disk/by-label/NixOS";
       fsType = "btrfs";
       options = [ "subvol=home" ];
     };
 
-  fileSystems."/nix" =
-    { device = "/dev/disk/by-uuid/6c3b4212-780c-40ee-acbc-4cfbc616077b";
+  fileSystems."/nix" = 
+    { device = "/dev/disk/by-label/NixOS";
       fsType = "btrfs";
       options = [ "subvol=nix" ];
     };
 
   fileSystems."/boot" =
-    { device = "/dev/disk/by-uuid/39EA-9B8A";
+    { device = "/dev/disk/by-label/EFI";
       fsType = "vfat";
       options = [ "fmask=0022" "dmask=0022" ];
     };

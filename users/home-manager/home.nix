@@ -15,24 +15,49 @@
     firefox
     thunderbird
     libreoffice-qt6
+    onlyoffice-desktopeditors
     yazi
+    bitwarden-desktop
     mpv
     zoxide
     file
     glow
+    mediainfo
+    exiftool
     p7zip
     fastfetch
     htop
     git
     git-crypt
     gnupg
-    pinentry-qt    
+    pinentry-qt
+    gh    
   ];
+  
+  gtk = {
+    enable = true;
+    iconTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };
+    cursorTheme = {
+      name = "Adwaita";
+      package = pkgs.adwaita-icon-theme;
+    };    
+  };
 
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
   fonts.fontconfig.enable = true;
+
+  # Bash
+  programs.bash = {
+    enable = true;
+    bashrcExtra = "";
+  };
+
+  targets.genericLinux.enable = true;
 
   # Git
   programs.git = {
@@ -44,7 +69,7 @@
       github.user = "andrabt";
       push.autoSetupRemote = true;
     };
-    userEmail = "aloysiusandra@gmail.com";
+    userEmail = "168298570+andrabt@users.noreply.github.com";
     userName = "andrabt";
   };
   programs.ssh = {

@@ -56,7 +56,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    // focus-follows-mouse max-scroll-amount="0%"
+    focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -102,6 +102,7 @@ input {
 layout {
     // Set gaps around windows in logical pixels.
     gaps 8
+    background-color "transparent"
 
     // When to center a column when changing focus, options are:
     // - "never", default behavior, focusing an off-screen column will keep at the left
@@ -246,13 +247,29 @@ layout {
 // Note that running niri as a session supports xdg-desktop-autostart,
 // which may be more convenient to use.
 // See the binds section below for more spawn examples.
-// spawn-at-startup "eww" "open" "bar"
+spawn-at-startup "mako"
+spawn-at-startup "waybar"
+spawn-at-startup "swayidle" "-w" "timeout" "600" "niri msg action power-off-monitors" "timeout" "900" "swaylock -f" "before-sleep" "swaylock -f"
 spawn-at-startup "xwayland-satellite"
+spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
+spawn-at-startup "bash" "-c" "wbg $HOME/Pictures/Wallpapers/nix-black.jpg"
 
 environment {
     // QT_QPA_PLATFORM "wayland"
     DISPLAY ":0"
     EDITOR "vim"
+}
+
+cursor {
+    xcursor-theme "Adwaita"
+    xcursor-size 24
+    
+    hide-after-inactive-ms 1000
+    hide-when-typing
+}
+
+clipboard {
+    // disable-primary
 }
 
 // Uncomment this line to ask the clients to omit their client-side decorations if possible.
@@ -287,16 +304,26 @@ animations {
 
 // Open the Firefox picture-in-picture player as floating by default.
 window-rule {
+    match app-id="Alacritty" title="nmtui"
+    match app-id="com.saivert.pwvucontrol"
+    open-floating true
+}
+
+window-rule {
     // This app-id regular expression will work for both:
     // - host Firefox (app-id is "firefox")
     // - Flatpak Firefox (app-id is "org.mozilla.firefox")
     match app-id="firefox"
+    match app-id="libreoffice*"
+    match app-id="ONLYOFFICE"
+    match app-id="mpv"
+    match app-id="Alacritty" title="Yazi"
     open-maximized true
 }
 
 // Example: block out two password managers from screen capture.
 // (This example rule is commented out with a "/-" in front.)
-/-window-rule {
+window-rule {
     match app-id=r#"^org\.keepassxc\.KeePassXC$"#
     match app-id=r#"^org\.gnome\.World\.Secrets$"#
 
@@ -324,11 +351,17 @@ gestures {
 }
 
 overview {
-    zoom 0.25
+    zoom 0.55
+    backdrop-color "#201e1e"
+}
+
+layer-rule {
+    match namespace="^wallpaper$"
+    place-within-backdrop true
 }
 
 switch-events {
-    lid-close { spawn "notify-send" "The laptop lid is closed!"; }
+    lid-close { spawn "swaylock"; }
     lid-open { spawn "notify-send" "The laptop lid is open!"; }
 }
 
@@ -351,8 +384,10 @@ binds {
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
     Mod+Y { spawn "alacritty" "-e" "yazi"; }
+    Mod+E { spawn "thunar"; }
     Mod+Alt+L { spawn "swaylock"; }
-    Mod+Shift+C { spawn "alacritty" "-e" "calcurse";}
+    Mod+Ctrl+C { spawn "bash" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy";}
+    Mod+Ctrl+V { spawn "bash" "-c" "cliphist list | fuzzel --dmenu | cliphist delete" ; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.
@@ -527,9 +562,7 @@ binds {
 
     // Expand the focused column to space not taken up by other fully visible columns.
     // Makes the column "fill the rest of the space".
-    Mod+Ctrl+F { expand-column-to-available-width; }
-
-    Mod+C { center-column; }
+    Mod+Ctrl+F { expand-column-to-available-width; } 
 
     // Finer width adjustments.
     // This command can also:

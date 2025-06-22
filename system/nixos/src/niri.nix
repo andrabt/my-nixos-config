@@ -1,10 +1,11 @@
 { config, pkgs, ... }:
 {
+
   programs.niri = {
     enable = true;
   };
+
   environment.sessionVariables = {
-    # WLR_NO_HARDWARE_CURSORS = "1";
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
   }; 
@@ -14,28 +15,46 @@
     brightnessctl
     calcurse
     cliphist
+    fuzzel
     libnotify
     mako
-    pwvucontrol
     polkit_gnome
-    swaybg
+    pwvucontrol
     swayidle
     swaylock
-    tofi
     waybar
+    wbg
     wl-clipboard
     wf-recorder
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
+    xfce.mousepad
+    xfce.orage
+    xfce.tumbler
+    xreader
+    xviewer
     xwayland-satellite
   ];
 
   fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
     nerd-fonts.fira-code
-    nerd-fonts.droid-sans-mono
   ];
 
+  # Enable Thunar
+  programs.thunar = {
+    enable = true;
+    plugins = with pkgs.xfce; [ 
+      thunar-archive-plugin
+      thunar-dropbox-plugin
+      thunar-media-tags-plugin
+      thunar-vcs-plugin 
+      thunar-volman 
+    ];
+  };
+
+  services.displayManager.cosmic-greeter.enable = true;
+
+  # Enable Polkit 
   systemd = {
     user.services.polkit-gnome-authentication-agent-1 = {
       description = "polkit-gnome-authentication-agent-1";
@@ -50,6 +69,12 @@
         TimeoutStopSec = 10;
       };
     };
+  };
+
+  # Enable Localsend
+  programs.localsend = {
+    enable = true;
+    openFirewall = true;
   };
 
 }

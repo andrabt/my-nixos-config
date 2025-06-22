@@ -7,11 +7,35 @@ padding.y = 10
 
 decorations = "Buttonless"
 
-opacity = 0.9
+opacity = 0.75
 blur = true
 
 dynamic_title = true
 
+[colors.primary]
+background = "0x2D2A2E"
+foreground = "0xfff1f3"
+
+[colors.normal]
+black = "0x201e1e"
+red = "0xdd0429"
+green = "0x30ba78"
+yellow = "0xfef148"
+blue = "0x5277c3"
+magenta = "0xce0056"
+cyan = "0x51a2da"
+white = "0xf4f4f4"
+
+[colors.bright]
+black = "0x62686c"
+red = "0xeb0028"
+green = "0x34be58"
+yellow = "0xffde00"
+blue = "0x1793d1"
+magenta = "0xdf4275"
+cyan = "0x63b1bc"
+white = "0xffffff"
+
 [font]
 normal.family = "monospace"
-size = 9.5
+size = 10

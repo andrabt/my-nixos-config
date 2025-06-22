@@ -15,7 +15,6 @@
   # Boot Extra Kernel Module
   boot.initrd.kernelModules = [];
   boot.kernelParams = [ "radeon.cik_support=0" "amdgpu.cik_support=1" ];
-
   boot.kernelPackages = pkgs.linuxPackages_latest;
 }
 
