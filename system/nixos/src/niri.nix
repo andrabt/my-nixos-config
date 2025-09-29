@@ -15,6 +15,7 @@
     brightnessctl
     calcurse
     cliphist
+    copyq
     fuzzel
     libnotify
     mako
@@ -52,7 +53,10 @@
     ];
   };
 
-  services.displayManager.cosmic-greeter.enable = true;
+  programs.file-roller.enable = true;
+
+  # Enable GDM as Display Manager for Niri
+  services.displayManager.gdm.enable = true;
 
   # Enable Polkit 
   systemd = {

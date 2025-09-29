@@ -1,4 +1,4 @@
-{ config, pkgs, ... }:
+{ config, pkgs, lib,... }:
 
 {
   imports =
@@ -6,7 +6,7 @@
       ./hardware-configuration.nix
       ./src/boot.nix
       ./src/niri.nix
-      ./src/tlp.nix
+      ./src/power.nix
     ];
 
   system.stateVersion = "24.05";
@@ -74,15 +74,23 @@
     videoDrivers = [ "amdgpu" ];
     xkb.layout = "us";
     xkb.options = "";
+    excludePackages = [ pkgs.xterm ];
   };
   time.timeZone = "Asia/Jakarta";
   i18n.defaultLocale = "en_US.UTF-8";
+
+# Enable Touchpad
+  services.libinput.enable = true;
 
 # Enable Polkit
   security.polkit.enable = true;
 
   # Disable TPM
   systemd.tpm2.enable = false;
+
+  # Disable systemd service by default
+  systemd.services.libvirtd.wantedBy = lib.mkForce [];
+  systemd.services.libvirt-guests.wantedBy = lib.mkForce [];
 
 # Environment Settings
   environment.systemPackages = with pkgs; [

@@ -12,12 +12,17 @@
   };
 
   home.packages = with pkgs; [
+  # Basic Apps
     firefox
     thunderbird
-    libreoffice-qt6
+    libreoffice
     onlyoffice-desktopeditors
     yazi
+  # Extra Apps
     bitwarden-desktop
+    logseq
+    upscayl
+    notesnook
     mpv
     zoxide
     file
@@ -28,17 +33,14 @@
     fastfetch
     htop
     git
-    git-crypt
-    gnupg
-    pinentry-qt
     gh    
   ];
   
   gtk = {
     enable = true;
     iconTheme = {
-      name = "Adwaita";
-      package = pkgs.adwaita-icon-theme;
+      name = "Tela";
+      package = pkgs.tela-icon-theme;
     };
     cursorTheme = {
       name = "Adwaita";
@@ -50,14 +52,6 @@
   nixpkgs.config.allowUnfree = true;
 
   fonts.fontconfig.enable = true;
-
-  # Bash
-  programs.bash = {
-    enable = true;
-    bashrcExtra = "";
-  };
-
-  targets.genericLinux.enable = true;
 
   # Git
   programs.git = {
@@ -82,9 +76,6 @@
     enable = true;
   };
 
-  services.gpg-agent = {
-    enable = true;
-    pinentry.package = pkgs.pinentry-qt;
-  };
+  services.gpg-agent.enable = true;
 
 }

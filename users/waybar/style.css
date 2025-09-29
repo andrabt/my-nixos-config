@@ -49,7 +49,7 @@
 
 /* The whole bar */
 window#waybar {
-    background: #201e1e;
+    background: #050301;
     color: #f4f4f4;
    /* background-color: #201e1e;*/
    /* border-radius: 0px;*/
@@ -60,6 +60,7 @@ window#waybar {
 #tray,
 #hardware-group,
 #network,
+#idle_inhibitor,
 #cpu,
 #memory,
 #backlight,
@@ -98,15 +99,22 @@ window#waybar {
 }
 
 #workspaces button {
+    border: none;
     border-radius: 0px;
     color: #f4f4f4;
-    padding: 2px 6px;
+    padding: 4px 10px;
     margin-right: 2px;
     margin-left: 2px;
+    margin-top: 2px;
+    margin-bottom: 2px;
 }
 
 #workspaces button.focused {
     color: #f4f4f4;
+}
+
+#workspaces button:hover {
+    color: #201e1e;
 }
 
 #mode {

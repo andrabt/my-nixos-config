@@ -23,7 +23,7 @@ input {
     touchpad {
         // off
         tap
-        // dwt
+        dwt
         // dwtp
         // drag-lock
         natural-scroll
@@ -34,7 +34,7 @@ input {
     }
 
     mouse {
-        // off
+        off
         // natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
@@ -42,7 +42,7 @@ input {
     }
 
     trackpoint {
-        // off
+        off
         // natural-scroll
         // accel-speed 0.2
         // accel-profile "flat"
@@ -56,7 +56,7 @@ input {
 
     // Focus windows and outputs automatically when moving the mouse into them.
     // Setting max-scroll-amount="0%" makes it work only on windows already fully on screen.
-    focus-follows-mouse max-scroll-amount="0%"
+    // focus-follows-mouse max-scroll-amount="0%"
 }
 
 // You can configure outputs by their name, which you can find
@@ -249,13 +249,15 @@ layout {
 // See the binds section below for more spawn examples.
 spawn-at-startup "mako"
 spawn-at-startup "waybar"
-spawn-at-startup "swayidle" "-w" "timeout" "600" "niri msg action power-off-monitors" "timeout" "900" "swaylock -f" "before-sleep" "swaylock -f"
+spawn-at-startup "swayidle" "-w" "timeout" "300" "swaylock -f" "timeout" "450" "niri msg action power-off-monitors" "timeout" "1800" "systemctl suspend" "resume" "niri msg action power-on-monitors" "before-sleep" "swaylock -f"
 spawn-at-startup "xwayland-satellite"
 spawn-at-startup "wl-paste" "--watch" "cliphist" "store"
-spawn-at-startup "bash" "-c" "wbg $HOME/Pictures/Wallpapers/nix-black.jpg"
+spawn-at-startup "brightnessctl" "set" "10%"
+spawn-at-startup "bash" "-c" "wbg $HOME/Pictures/Wallpapers/backiee-123960-landscape.jpg"
 
 environment {
-    // QT_QPA_PLATFORM "wayland"
+    QT_QPA_PLATFORM "wayland"
+
     DISPLAY ":0"
     EDITOR "vim"
 }
@@ -264,8 +266,8 @@ cursor {
     xcursor-theme "Adwaita"
     xcursor-size 24
     
-    hide-after-inactive-ms 1000
-    hide-when-typing
+    // hide-after-inactive-ms 1000
+    // hide-when-typing
 }
 
 clipboard {
@@ -351,7 +353,7 @@ gestures {
 }
 
 overview {
-    zoom 0.55
+    zoom 0.65
     backdrop-color "#201e1e"
 }
 
@@ -383,11 +385,11 @@ binds {
     // Suggested binds for running programs: terminal, app launcher, screen locker.
     Mod+T { spawn "alacritty"; }
     Mod+D { spawn "fuzzel"; }
-    Mod+Y { spawn "alacritty" "-e" "yazi"; }
+    Mod+Y hotkey-overlay-title="Spawn yazi" { spawn "alacritty" "-e" "yazi"; }
     Mod+E { spawn "thunar"; }
     Mod+Alt+L { spawn "swaylock"; }
     Mod+Ctrl+C { spawn "bash" "-c" "cliphist list | fuzzel --dmenu | cliphist decode | wl-copy";}
-    Mod+Ctrl+V { spawn "bash" "-c" "cliphist list | fuzzel --dmenu | cliphist delete" ; }
+    Mod+Ctrl+V { spawn "bash" "-c" "cliphist list | fuzzel --dmenu | cliphist delete"; }
 
     // You can also use a shell. Do this if you need pipes, multiple commands, etc.
     // Note: the entire command goes as a single argument in the end.

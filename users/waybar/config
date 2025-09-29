@@ -53,7 +53,7 @@
 
     "modules-right": [
         "tray",
-	"network",
+	"group/applet",
         "group/hardware",
         "clock#time",
 	"group/power"
@@ -63,6 +63,20 @@
         "icon-size": 16,
         "spacing":5
      },
+
+    "group/applet": {
+        "orientation": "horizontal",
+        "drawer": {
+            "transition-duration": 600,
+            "children-class": "drawer-child",
+            "click-to-reveal": false,
+            "transition-left-to-right": true
+        },
+        "modules": [
+            "network",
+            "idle_inhibitor"
+        ]
+    },
 
     "network": {
         "format-disabled": " ",
@@ -77,10 +91,20 @@
         "interval": 2
     },
 
+    "idle_inhibitor": {
+        "format": "{icon}",
+        "format-icons": {
+            "activated": " ",
+            "deactivated": " "
+        },
+        "tooltip-format-activated": "Idle Inhibitor Activated",
+        "tooltip-format-deactivated": "Idle Inhibitor Deactivated"
+    },
+
     "group/hardware": {
         "orientation": "horizontal",
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 600,
             "children-class": "drawer-child",
             "click-to-reveal": false,
             "transition-left-to-right": false
@@ -165,7 +189,7 @@
     "group/power": {
         "orientation": "horizontal",
         "drawer": {
-            "transition-duration": 500,
+            "transition-duration": 600,
             "children-class": "drawer-child",
             "click-to-reveal": false,
             "transition-left-to-right": false
