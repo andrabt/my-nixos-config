@@ -1,0 +1,95 @@
+{
+  "nodes": {
+    "dankMaterialShell": {
+      "inputs": {
+        "dgop": [
+          "dgop"
+        ],
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "quickshell": "quickshell"
+      },
+      "locked": {
+        "lastModified": 1765517020,
+        "narHash": "sha256-xPP3xqG91Am2YrqUQVfdrVE+EYxWbe1OwSorzbqdafU=",
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "rev": "77fd61f81e981a76be60a94a10ac1db4b8b0a106",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "DankMaterialShell",
+        "type": "github"
+      }
+    },
+    "dgop": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1762835999,
+        "narHash": "sha256-UykYGrGFOFTmDpKTLNxj1wvd1gbDG4TkqLNSbV0TYwk=",
+        "owner": "AvengeMedia",
+        "repo": "dgop",
+        "rev": "799301991cd5dcea9b64245f9d500dcc76615653",
+        "type": "github"
+      },
+      "original": {
+        "owner": "AvengeMedia",
+        "repo": "dgop",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1765186076,
+        "narHash": "sha256-hM20uyap1a0M9d344I692r+ik4gTMyj60cQWO+hAYP8=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "addf7cf5f383a3101ecfba091b98d0a1263dc9b8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "quickshell": {
+      "inputs": {
+        "nixpkgs": [
+          "dankMaterialShell",
+          "nixpkgs"
+        ]
+      },
+      "locked": {
+        "lastModified": 1764663772,
+        "narHash": "sha256-sHqLmm0wAt3PC4vczJeBozI1/f4rv9yp3IjkClHDXDs=",
+        "ref": "refs/heads/master",
+        "rev": "26531fc46ef17e9365b03770edd3fb9206fcb460",
+        "revCount": 713,
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
+      },
+      "original": {
+        "rev": "26531fc46ef17e9365b03770edd3fb9206fcb460",
+        "type": "git",
+        "url": "https://git.outfoxxed.me/quickshell/quickshell"
+      }
+    },
+    "root": {
+      "inputs": {
+        "dankMaterialShell": "dankMaterialShell",
+        "dgop": "dgop",
+        "nixpkgs": "nixpkgs"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}

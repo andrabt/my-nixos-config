@@ -1,18 +1,33 @@
 {
-  description = "A simple NixOS flake";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
-    home-manager.url = "github:nix-community/home-manager";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+
+    dgop = {
+      url = "github:AvengeMedia/dgop";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    dankMaterialShell = {
+      url = "github:AvengeMedia/DankMaterialShell";
+      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.dgop.follows = "dgop";
+    };
+
   };
 
-  outputs = { self, nixpkgs,... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
-      modules = [
-        ./configuration.nix
-      ];
+  outputs = { 
+    self, 
+    nixpkgs, 
+    dankMaterialShell, 
+    dgop, 
+    ... 
+    }@inputs: {
+      nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
+        specialArgs = { inherit inputs; };
+        modules = [
+          ./configuration.nix
+        ];
+      };
     };
-  };
 }

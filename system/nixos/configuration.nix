@@ -1,16 +1,42 @@
-{ config, pkgs, lib,... }:
+{ config, pkgs, lib, inputs, ... }:
 
 {
-  imports =
-    [ 
+  imports = [ 
       ./hardware-configuration.nix
-      ./src/boot.nix
       ./src/niri.nix
-      ./src/power.nix
-    ];
+  ];
 
   system.stateVersion = "24.05";
- 
+
+# ++++++++++++++++++++++++
+
+# Boot
+  # Use GRUB
+  boot.loader.grub = {
+    enable = true;
+    device = "nodev";
+    efiSupport = true;
+    memtest86.enable = true;
+  };
+
+  boot.loader.efi = {
+    canTouchEfiVariables = true;
+    efiSysMountPoint = "/boot";
+  };
+
+  # Boot Extra Kernel Module
+  boot.initrd.kernelModules = [ "amdgpu" ];
+  boot.kernelParams = [ 
+    "zswap.enabled=1" 
+    "zswap.compressor=zstd" 
+    "zswap.max_pool_percent=20" 
+    "zswap.shrinker_enabled=1" 
+    "radeon.cik_support=0" 
+    "amdgpu.cik_support=1" 
+  ];
+
+#++++++++++++++++++++++++
+
 # Hardware & Filesystems Settings
   # Enable Compression on BTRFS
   fileSystems = {
@@ -34,7 +60,12 @@
     interval = "weekly";
     fileSystems = [ "/" ];
   };
-  
+ 
+  # Enable Swap Device
+  swapDevices = [ {
+    device = "/dev/disk/by-label/swap";
+  } ];  
+ 
   # Enable Graphic
   hardware.graphics = {
     enable = true;
@@ -42,6 +73,7 @@
   };
   
   # Enable Sound
+  hardware.bluetooth.enable = true;
   services.pulseaudio.enable = false;
   security.rtkit.enable = true;
   services.pipewire = {
@@ -50,14 +82,12 @@
     alsa.support32Bit = true;
     pulse.enable = true;
   };
-  
-  # Enable Zram Swap
-  zramSwap = {
-    enable = true;
-    algorithm = "zstd";
-    memoryPercent = 80;
-  };
-  
+
+  # Enable Touchpad
+  services.libinput.enable = true;
+
+# ++++++++++++++++++++++
+
 # Network Settings
   networking.hostName = "nixos";
   networking.networkmanager.enable = true;
@@ -68,33 +98,27 @@
   };
   services.openssh.enable = true;
 
-# Locale Settings
-  services.xserver = {  
-    enable = true;
-    videoDrivers = [ "amdgpu" ];
-    xkb.layout = "us";
-    xkb.options = "";
-    excludePackages = [ pkgs.xterm ];
-  };
+# ++++++++++++++++++++++
+
+# Locale Settings;
   time.timeZone = "Asia/Jakarta";
   i18n.defaultLocale = "en_US.UTF-8";
 
-# Enable Touchpad
-  services.libinput.enable = true;
-
-# Enable Polkit
+  # Enable Polkit
   security.polkit.enable = true;
-
-  # Disable TPM
-  systemd.tpm2.enable = false;
 
   # Disable systemd service by default
   systemd.services.libvirtd.wantedBy = lib.mkForce [];
   systemd.services.libvirt-guests.wantedBy = lib.mkForce [];
 
+# ++++++++++++++++++++++
+
 # Environment Settings
   environment.systemPackages = with pkgs; [
-    home-manager
+    firefox
+    thunderbird
+    libreoffice
+    onlyoffice-desktopeditors
     vim
     wget
     curl
@@ -102,10 +126,29 @@
     exfatprogs
     gvfs
     distrobox
+    yazi
+    bitwarden-desktop
+    localsend
+    logseq
+    notesnook
+    mpv
+    zoxide
+    file
+    glow
+    mediainfo
+    exiftool
+    p7zip
+    fastfetch
+    htop
+    git
+    gh
+    quickshell
   ];
 
   # Set the default editor to vim
   environment.variables.EDITOR = "vim";
+
+# ++++++++++++++++++++++++
 
 # Nix Settings
   # Enable Flakes features
@@ -119,21 +162,71 @@
     dates = "weekly";
     options = "--delete-older-than 7d";
   };
+  nix.settings.trusted-users = [ "root" "andrabt" ];
   nixpkgs.config.allowUnfree = true;
- 
-# Enable other services
-  xdg.portal.enable = true;
 
+# ++++++++++++++++++++++++
+
+# Enable Power Management
+  powerManagement = {
+    enable = true;
+    powertop.enable = true;
+  };
+  
+  services.power-profiles-daemon.enable = false;
+  services.upower.enable = true;
+  services.system76-scheduler = {
+    enable = true;
+    settings.cfsProfiles.enable = true;
+  };
+
+  hardware.system76.power-daemon.enable = true;
+
+  # Power Button and Laptop Behaviour
+  services.logind.settings.Login = {
+    HandlePowerKey = "suspend";
+    HandleLidSwitch = "suspend";
+  };
+  
+# ++++++++++++++++++++++++
+
+# Other Services
+  xdg.portal = {
+    enable = true;
+    extraPortals = [pkgs.xdg-desktop-portal-gtk];
+  };
   services.flatpak.enable = true;
   services.printing.enable = true;
   services.gvfs.enable = true;
+  systemd.tpm2.enable = false;
+
+# ++++++++++++++++++++++++
 
 # Users Settings
   users.users.andrabt = {
     isNormalUser = true;
     description = "Andra Berlianto Tedja";
     extraGroups = [ "networkmanager" "wheel" "input" "audio" "video" ];
+    packages = with pkgs; [
+      adwaita-icon-theme
+      papirus-icon-theme
+    ];
   };
+
+  programs.dconf = {
+    enable = true;
+    profiles.user.databases = [{
+      settings = {
+        "org/gnome/desktop/interface" = {
+           icon-theme = "Papirus";
+           cursor-theme = "Adwaita";
+        };
+      };
+    }];
+  };
+
+
+# ++++++++++++++++++++++++
 
 # Virtualisation
   programs.virt-manager.enable = true;
@@ -143,4 +236,3 @@
     podman.dockerCompat = true;
   };
 }
-

@@ -1,32 +1,28 @@
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 {
+  imports = [
+    inputs.dankMaterialShell.nixosModules.dankMaterialShell
+  ];
 
   programs.niri = {
+    enable = true;
+  };
+
+  programs.dankMaterialShell = {
     enable = true;
   };
 
   environment.sessionVariables = {
     NIXOS_OZONE_WL = "1";
     MOZ_ENABLE_WAYLAND = "1";
+    QT_QPA_PLATFORM = "wayland";
+    QT_QPA_PLATFORMTHEME = "gtk3";
   }; 
 
   environment.systemPackages = with pkgs; [
     alacritty
-    brightnessctl
-    calcurse
-    cliphist
-    copyq
-    fuzzel
-    libnotify
-    mako
-    polkit_gnome
     pwvucontrol
-    swayidle
-    swaylock
-    waybar
-    wbg
-    wl-clipboard
-    wf-recorder
+    quickshell
     xdg-desktop-portal-gtk
     xdg-desktop-portal-gnome
     xfce.mousepad
@@ -35,6 +31,7 @@
     xreader
     xviewer
     xwayland-satellite
+    
   ];
 
   fonts.packages = with pkgs; [
@@ -42,6 +39,7 @@
   ];
 
   # Enable Thunar
+  programs.xfconf.enable = true;
   programs.thunar = {
     enable = true;
     plugins = with pkgs.xfce; [ 
@@ -53,29 +51,6 @@
     ];
   };
 
-  programs.file-roller.enable = true;
-
-  # Enable GDM as Display Manager for Niri
-  services.displayManager.gdm.enable = true;
-
-  # Enable Polkit 
-  systemd = {
-    user.services.polkit-gnome-authentication-agent-1 = {
-      description = "polkit-gnome-authentication-agent-1";
-      wantedBy = [ "graphical-session.target" ];
-      wants = [ "graphical-session.target" ];
-      after = [ "graphical-session.target" ];
-      serviceConfig = {
-        Type = "simple";
-        ExecStart = "${pkgs.polkit_gnome}/libexec/polkit-gnome-authentication-agent-1";
-        Restart = "on-failure";
-        RestartSec = 1;
-        TimeoutStopSec = 10;
-      };
-    };
-  };
-
-  # Enable Localsend
   programs.localsend = {
     enable = true;
     openFirewall = true;

@@ -11,7 +11,10 @@
   };
 
   # Include KDE Plasma Apps
-  environment.systemPackages = with pkgs; [];
+  environment.systemPackages = with pkgs.kdePackages; [
+    filelight
+    kcalc
+  ];
 
   # Exclude KDE Plasma Apps
   environment.plasma6.excludePackages = with pkgs; [];
@@ -22,21 +25,21 @@
   };
 
   # Enable KDE Connect
-  programs.kdeconnect = {
-    enable = true;
-  };
+  # programs.kdeconnect = {
+  #   enable = true;
+  # };
 
   # Disable some services
-  services.gvfs.enable = false;
+  # services.gvfs.enable = false;
 
   # Optimasi Systemd
-  systemd.services.kde-plasmashell = {
-    enable = true;
-    serviceConfig = {
-      MemoryDenyWriteExecute = true;
-      NoNewPrivileges = true;
-      PrivateTmp = true;
-    };
-  };
+  # systemd.services.kde-plasmashell = {
+  #   enable = true;
+  #   serviceConfig = {
+  #     MemoryDenyWriteExecute = true;
+  #     NoNewPrivileges = true;
+  #     PrivateTmp = true;
+  #   };
+  # };
 }
 
